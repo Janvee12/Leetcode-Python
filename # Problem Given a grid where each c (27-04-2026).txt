@@ -1,0 +1,58 @@
+# Problem: Given a grid where each cell represents a street type, determine if there is a valid path from top-left to bottom-right.
+
+# Approach: Use DFS (Depth First Search) to explore paths.
+# Each street type allows movement in certain directions.
+# Move only if: Next cell is inside the grid
+# Not visited before
+# The connection between current and next cell is valid
+
+# Time Complexity: O(N × M)
+
+# Code: 
+
+from typing import List
+
+class Solution:
+    def hasValidPath(self, grid: List[List[int]]) -> bool:
+        # Directions allowed for each street type
+        dirs = {
+            1: [(0,1),(0,-1)],      # left-right
+            2: [(-1,0),(1,0)],      # up-down
+            3: [(0,-1),(1,0)],      # left-down
+            4: [(0,1),(1,0)],       # right-down
+            5: [(-1,0),(0,-1)],     # up-left
+            6: [(-1,0),(0,1)]       # up-right
+        }
+
+        # Opposite directions for validation
+        opposite = {
+            (1,0): (-1,0),
+            (-1,0): (1,0),
+            (0,1): (0,-1),
+            (0,-1): (0,1)
+        }
+
+        def dfs(i, j):
+            # Reached destination
+            if i == n - 1 and j == m - 1:
+                return True
+
+            for di, dj in dirs[grid[i][j]]:
+                ni, nj = i + di, j + dj
+
+                # Boundary and visited check
+                if ni < 0 or ni >= n or nj < 0 or nj >= m or (ni, nj) in seen:
+                    continue
+
+                # Check valid connection
+                if opposite[(di, dj)] in dirs[grid[ni][nj]]:
+                    seen.add((ni, nj))
+                    if dfs(ni, nj):
+                        return True
+
+            return False
+
+        n, m = len(grid), len(grid[0])
+        seen = {(0, 0)}
+
+        return dfs(0, 0)
