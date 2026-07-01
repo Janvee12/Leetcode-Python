@@ -8,11 +8,7 @@
 from typing import List
 
 class Solution:
-    def insert(
-        self,
-        intervals: List[List[int]],
-        newInterval: List[int]
-    ) -> List[List[int]]:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
 
         res = []
 
@@ -28,14 +24,14 @@ class Solution:
             elif newInterval[0] > intervals[i][1]:
                 res.append(intervals[i])
 
-            # Case 3: Overlapping intervals
+            # Case 3: Intervals overlap
             else:
                 newInterval = [
                     min(newInterval[0], intervals[i][0]),
                     max(newInterval[1], intervals[i][1])
                 ]
 
-        # Add the merged interval
+        # If newInterval belongs at the end
         res.append(newInterval)
 
         return res
