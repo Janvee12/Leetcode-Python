@@ -1,0 +1,23 @@
+# ============================
+# PLATFORM:
+# LeetCode 58
+# PROBLEM:
+# Length of Last Word
+# ============================
+
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+
+        i = len(s) - 1
+        length = 0
+
+        # Skip trailing spaces
+        while s[i] == " ":
+            i -= 1
+
+        # Count characters of the last word
+        while i >= 0 and s[i] != " ":
+            length += 1
+            i -= 1
+
+        return length
