@@ -1,0 +1,51 @@
+# ============================
+# PLATFORM:
+# LeetCode
+# ============================
+# PROBLEM:
+# N-Queens II
+# ============================
+
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+
+        # Track occupied columns and diagonals
+        columns = set()
+        positive_diagonal = set()
+        negative_diagonal = set()
+
+        total_solutions = 0
+
+        # Backtracking function
+        def backtrack(row):
+            nonlocal total_solutions
+
+            # All queens are placed successfully
+            if row == n:
+                total_solutions += 1
+                return
+
+            # Try placing a queen in every column
+            for col in range(n):
+
+                if (
+                    col in columns
+                    or (row + col) in positive_diagonal
+                    or (row - col) in negative_diagonal
+                ):
+                    continue
+
+                # Place the queen
+                columns.add(col)
+                positive_diagonal.add(row + col)
+                negative_diagonal.add(row - col)
+
+                backtrack(row + 1)
+
+                # Remove the queen (Backtrack)
+                columns.remove(col)
+                positive_diagonal.remove(row + col)
+                negative_diagonal.remove(row - col)
+
+        backtrack(0)
+        return total_solutions
