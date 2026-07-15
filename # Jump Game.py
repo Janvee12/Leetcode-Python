@@ -1,24 +1,26 @@
 # ============================
 # PLATFORM:
-# LeetCode 55
+# LeetCode
+# ============================
 # PROBLEM:
 # Jump Game
 # ============================
 
 from typing import List
 
+
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
 
-        # Initially, the goal is the last index
+        # Last index that needs to be reached
         goal = len(nums) - 1
 
-        # Traverse from right to left
+        # Traverse the array from right to left
         for i in range(len(nums) - 1, -1, -1):
 
-            # If current index can reach the goal
+            # Update the goal if the current index can reach it
             if i + nums[i] >= goal:
                 goal = i
 
-        # If we can move the goal to index 0
+        # Check if the first index can reach the last index
         return goal == 0
