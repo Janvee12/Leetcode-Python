@@ -1,37 +1,43 @@
 # ============================
 # PLATFORM:
-# LeetCode 57
+# LeetCode
+# ============================
 # PROBLEM:
 # Insert Interval
 # ============================
 
 from typing import List
 
-class Solution:
-    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
 
-        res = []
+class Solution:
+    def insert(
+        self,
+        intervals: List[List[int]],
+        newInterval: List[int]
+    ) -> List[List[int]]:
+
+        result = []
 
         # Traverse all intervals
         for i in range(len(intervals)):
 
-            # Case 1: New interval comes before current interval
+            # New interval comes before the current interval
             if newInterval[1] < intervals[i][0]:
-                res.append(newInterval)
-                return res + intervals[i:]
+                result.append(newInterval)
+                return result + intervals[i:]
 
-            # Case 2: New interval comes after current interval
+            # Current interval comes before the new interval
             elif newInterval[0] > intervals[i][1]:
-                res.append(intervals[i])
+                result.append(intervals[i])
 
-            # Case 3: Intervals overlap
+            # Overlapping intervals
             else:
                 newInterval = [
                     min(newInterval[0], intervals[i][0]),
                     max(newInterval[1], intervals[i][1])
                 ]
 
-        # If newInterval belongs at the end
-        res.append(newInterval)
+        # Append the merged interval
+        result.append(newInterval)
 
-        return res
+        return result
